@@ -1,14 +1,17 @@
 package com.generation.segurae.model;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-
-import jakarta.persistence.Column;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
@@ -16,82 +19,89 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 @Entity
-@Table(name = "tb_usuario")
+@Table(name = "tb_usuarios")
 public class Usuario {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @NotBlank
-    @Column(unique = true)
-    @Size(min = 2, max = 100)
-    private String nome;
+	@NotBlank(message = "O Atributo Nome é Obrigatório!")
+	private String nome;
 
-    @NotBlank
-    @Email
-    @Column(unique = true)
-    @Size(min = 5, max = 100)
-    private String email;
+	@NotBlank(message = "O Atributo Usuário é Obrigatório!")
+	@Email(message = "O Atributo Usuário deve ser um email válido!")
+	private String usuario;
 
-    @NotBlank
-    @Size(min = 8, max = 255)
-    private String senha;
+	@NotBlank(message = "O Atributo Senha é Obrigatório!")
+	@Size(min = 8, message = "A Senha deve ter no mínimo 8 caracteres")
+	private String senha;
 
-    @NotBlank
-    @Size(min = 1, max = 255)
-    private String fotoUrl;
+	@Size(max = 5000, message = "O link da foto não pode ser maior do que 5000 caracteres")
+	private String foto;
 
-    @OneToOne
-    @JoinColumn(name = "cliente_id", unique = true)
-    @JsonIgnoreProperties("usuario")
-    private Cliente cliente;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario", cascade = CascadeType.REMOVE)
+	@JsonIgnoreProperties(value = "usuario", allowSetters = true)
+	private List<Apolice> apolice;
 
-    public Long getId() {
-        return id;
-    }
+	@OneToOne
+	@JoinColumn(name = "cliente_id", unique = true)
+	@JsonIgnoreProperties("usuario")
+	private Cliente cliente;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public String getNome() {
-        return nome;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+	public String getNome() {
+		return nome;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public String getUsuario() {
+		return usuario;
+	}
 
-    public String getSenha() {
-        return senha;
-    }
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
 
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
+	public String getSenha() {
+		return senha;
+	}
 
-    public String getFotoUrl() {
-        return fotoUrl;
-    }
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
 
-    public void setFotoUrl(String fotoUrl) {
-        this.fotoUrl = fotoUrl;
-    }
+	public String getFoto() {
+		return foto;
+	}
 
-    public Cliente getCliente() {
-        return cliente;
-    }
+	public void setFoto(String foto) {
+		this.foto = foto;
+	}
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
+	public List<Apolice> getApolice() {
+		return apolice;
+	}
+
+	public void setApolice(List<Apolice> apolice) {
+		this.apolice = apolice;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
 }

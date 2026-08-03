@@ -110,4 +110,6 @@ public class Cliente {
 	public void setApolices(List<Apolice> apolices) {
 		this.apolices = apolices;
 	}
+	
+	
 }

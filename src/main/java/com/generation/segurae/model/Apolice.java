@@ -19,7 +19,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-
 @Entity
 @Table(name = "tb_apolice")
 public class Apolice {
@@ -28,7 +27,7 @@ public class Apolice {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "numeroApolice", length = 255, unique = true, nullable = false)
+	@Column(name = "numeroApolice", length = 255, unique = true, nullable = false, updatable = false)
 	private String numeroApolice;
 
 	@NotBlank(message = "O bem segurado não pode estar vazio!")
@@ -78,6 +77,10 @@ public class Apolice {
 	@ManyToOne
 	@JsonIgnoreProperties("apolices")
 	private Cliente cliente;
+
+	@ManyToOne
+	@JsonIgnoreProperties("apolice")
+	private Usuario usuario;
 
 	public Long getId() {
 		return id;
@@ -181,6 +184,14 @@ public class Apolice {
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	@PrePersist
