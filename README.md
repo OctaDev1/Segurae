@@ -1,4 +1,4 @@
-# 🚗 Seguraêe
+# 🚗 Seguraê
 
 Sistema de Gerenciamento de Seguros Automotivos desenvolvido com **Java + Spring Boot**, com o objetivo de centralizar informações sobre clientes, veículos e apólices, proporcionando uma gestão mais simples, segura e eficiente.
 
